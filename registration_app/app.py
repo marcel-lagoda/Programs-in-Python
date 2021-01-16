@@ -75,7 +75,7 @@ def menu():
                             input("Enter the student ID to add a mark to: ")
                         )
                         student = student_list[student_id]
-                        new_mark = int(input("Enter x the new mark to be added: "))
+                        new_mark = int(input("Enter the new mark to be added: "))
                         add_mark(student, new_mark)
                         break
                     except ValueError:
