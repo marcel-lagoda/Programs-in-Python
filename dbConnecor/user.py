@@ -1,6 +1,4 @@
 from database import connect
-
-()
 import psycopg2 as pg
 
 
