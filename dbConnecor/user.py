@@ -1,19 +1,18 @@
-from database import connect
-import psycopg2 as pg
+from database import Connection
 
 
 class User:
-    def __init__(self, email, f_name, l_name, id):
+    def __init__(self, email, f_name, l_name, idx):
         self.email = email
         self.f_name = f_name
         self.l_name = l_name
-        self.id = id
+        self.idx = idx
 
     def __repr__(self):
         return f"{self.email}"
 
     def insert_into_db(self):
-        with connect() as cnx:
+        with Connection() as cnx:
             with cnx.cursor() as cursor:
                 cursor.execute(
                     "INSERT INTO users (email, first_name, last_name) VALUES(%s, %s, %s)",
@@ -22,9 +21,9 @@ class User:
 
     @classmethod
     def select_from_db_by_email(cls, email):
-        with connect() as cnx:
+        with Connection() as cnx:
             with cnx.cursor() as cursor:
-                cursor.execute('SELECT * FROM users WHERE email=%s', (email,))
+                cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
                 selected_data = cursor.fetchone()
                 return cls(
                     selected_data[0],
