@@ -1,8 +1,14 @@
 from psycopg2 import pool
 
-cnx_pool = pool.SimpleConnectionPool(
-    1, 1, user="user", database="database", password="password", host="host"
-)
+
+class Database:
+    cnx_pool = None
+
+    @staticmethod
+    def initialise_pool():
+        Database.cnx_pool = pool.SimpleConnectionPool(
+            1, 1, user="user", database="database", password="password", host="host"
+        )
 
 
 class Cursor:
