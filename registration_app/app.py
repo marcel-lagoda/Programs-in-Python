@@ -4,9 +4,8 @@ student_list = []
 def add_student():
     """
     Add a new student.
-    :return: dict of student data
+    :return: student_data
     """
-    # student_data = {}
     while True:
         name = input("Please enter a student's name: ").capitalize().strip()
         if len(name) < 1:
@@ -24,8 +23,6 @@ def add_student():
 
 def add_mark(student, mark):
     student["marks"].append(mark)
-    # print(type(student))
-    # return student
 
 
 def calculate_average_mark(student):
@@ -42,9 +39,13 @@ def print_student_details(student):
 
 
 def print_student_list(students):
-    for i, student in enumerate(students):
-        print(f"ID: {i}")
-        print_student_details(student)
+    if students:
+        for i, student in enumerate(students):
+            print(f"ID: {i}")
+            print_student_details(student)
+    else:
+        msg = "No students yet."
+        print(msg)
 
 
 def menu():
@@ -55,7 +56,6 @@ def menu():
         "or 'q' to quit. "
         "Enter your selection: "
     )
-    # skąd wie, że ma zakończyć?
 
     while selection.lower() != "q":
         if selection.lower() == "p":
@@ -63,29 +63,18 @@ def menu():
         elif selection.lower() == "s":
             student_list.append(add_student())
         elif selection.lower() == "m":
-            print_student_list(student_list)
-            student_id = int(input("Enter the student ID to add a mark to: "))
-            if student_id > len(student_list):
-                print("There is no student with such #ID. Please add a student first!")
-                student_list.append(add_student())
-                while True:
-                    try:
-                        print_student_list(student_list)
-                        student_id = int(
-                            input("Enter the student ID to add a mark to: ")
-                        )
-                        student = student_list[student_id]
-                        new_mark = int(input("Enter the new mark to be added: "))
-                        add_mark(student, new_mark)
-                        break
-                    except ValueError:
-                        print("Only digits allowed")
-            else:
-                new_mark = int(input("Enter the new mark to be added: "))
-                add_mark(student, new_mark)
+            if student_list:
+                print_student_list(student_list)
+                try:
+                    student_id = int(input("Select the student ID to add a mark to: "))
+                    student = student_list[student_id]
+                    new_mark = int(input("Enter the new mark to be added: "))
+                    add_mark(student, new_mark)
+                except (IndexError, ValueError):
+                    pass
 
         selection = input(
-            "Enter 'p' to print the student lista, "
+            "Enter: 'p' to print the student list, "
             "'s' to add a new student, "
             "'m' to add a mark to a student, "
             "or 'q' to quit. "
