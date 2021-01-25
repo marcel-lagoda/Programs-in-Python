@@ -17,7 +17,7 @@ class User:
         self.movies = list(filter(lambda movie: movie.title != title, self.movies))
 
     def watched_movies(self):
-        pass
+        self.movies = list(filter(lambda movie: movie.watched, self.movies))
 
     def save_to_file(self):
         pass
