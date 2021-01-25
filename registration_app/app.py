@@ -1,11 +1,7 @@
-student_list = []
+students_list = []
 
 
-def add_student():
-    """
-    Add a new student.
-    :return: student_data
-    """
+def create_student():
     while True:
         name = input("Please enter a student's name: ").capitalize().strip()
         if len(name) < 1:
@@ -13,10 +9,7 @@ def add_student():
         elif not name.isalpha():
             print("This value cannot be a number. Only letters.")
         elif name.isalpha():
-            student_data = {
-                "name": name,
-                "marks": [],
-            }
+            student_data = {"name": name, "marks": []}
 
             return student_data
 
@@ -25,60 +18,54 @@ def add_mark(student, mark):
     student["marks"].append(mark)
 
 
-def calculate_average_mark(student):
-    number = len(student["marks"])
-    if number == 0:
-        return 0
-
-    total = sum(student["marks"])
-    return total / number
+def calculate_student_avg(student):
+    try:
+        result = sum(student["marks"]) / len(student["marks"])
+        return result
+    except ZeroDivisionError:
+        return
 
 
 def print_student_details(student):
-    print(f"{student['name']}, average mark: {calculate_average_mark(student)}.")
+    print(f'{student["name"]}, average: {calculate_student_avg(student)}')
 
 
-def print_student_list(students):
-    if students:
-        for i, student in enumerate(students):
-            print(f"ID: {i}")
-            print_student_details(student)
-    else:
-        msg = "No students yet."
-        print(msg)
+def print_all_students(students):
+    for idx, student in enumerate(students):
+        print(f"ID: {idx}, {print_student_details(student)}")
 
 
 def menu():
-    selection = input(
-        "Enter 'p' to print the student list, "
-        "'s' to add a new student, "
-        "'m' to add a mark to a student, "
-        "or 'q' to quit. "
-        "Enter your selection: "
+    choice = input(
+        "Enter 'p' to print all students,"
+        "'s' to add a new student,"
+        "'m' to add a new mark to a student,"
+        "'q' to end program."
+        "Select your choice: "
     )
 
-    while selection.lower() != "q":
-        if selection.lower() == "p":
-            print_student_list(student_list)
-        elif selection.lower() == "s":
-            student_list.append(add_student())
-        elif selection.lower() == "m":
-            if student_list:
-                print_student_list(student_list)
+    while choice != "q":
+        if choice == "p":
+            print_all_students(students_list)
+        elif choice == "s":
+            students_list.append(create_student())
+        elif choice == "m":
+            if students_list:
+                print_all_students(students_list)
                 try:
                     student_id = int(input("Select the student ID to add a mark to: "))
-                    student = student_list[student_id]
+                    student = students_list[student_id]
                     new_mark = int(input("Enter the new mark to be added: "))
                     add_mark(student, new_mark)
                 except (IndexError, ValueError):
                     pass
 
-        selection = input(
-            "Enter: 'p' to print the student list, "
-            "'s' to add a new student, "
-            "'m' to add a mark to a student, "
-            "or 'q' to quit. "
-            "Enter your selection: "
+        choice = input(
+            "Enter 'l' to list all students,"
+            "'s' to add a new student,"
+            "'m' to add a new mark to a student,"
+            "'q' to end program."
+            "Select your choice: "
         )
 
 
