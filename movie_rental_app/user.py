@@ -13,8 +13,8 @@ class User:
         movie = Movie(title, genre, False)
         self.movies.append(movie)
 
-    def delete_movie(self):
-        pass
+    def delete_movie(self, title=None):
+        self.movies = list(filter(lambda movie: movie.title != title, self.movies))
 
     def watched_movies(self):
         pass
