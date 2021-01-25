@@ -19,8 +19,11 @@ class User:
     def watched_movies(self):
         self.movies = list(filter(lambda movie: movie.watched, self.movies))
 
-    def save_to_file(self):
-        pass
+    def save_to_CSV(self):
+        with open(f"{self.name}.txt", "w") as f:
+            f.write(self.name + "\n")
+            for movie in self.movies:
+                f.write(f"{movie.title}, {movie.genre}, {str(movie.watched)}")
 
     @classmethod
     def read_from_file(cls, filename):
