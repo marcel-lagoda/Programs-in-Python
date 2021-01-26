@@ -14,6 +14,17 @@ def create_student():
             return student_data
 
 
+# def add_student():
+#     student_data = {}
+#     while not student_data:
+#         name = input("Enter a student name: ").strip().capitalize()
+#         if len(name) > 0 and name.isalpha():
+#             student_data = {"name": name, "marks": []}
+#         else:
+#             print("Try again:")
+#     return student_data
+
+
 def add_mark(student, mark):
     student["marks"].append(mark)
 
