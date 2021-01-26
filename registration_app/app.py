@@ -61,7 +61,7 @@ def menu():
                     pass
 
         choice = input(
-            "Enter 'l' to list all students,"
+            "Enter 'p' to print all students,"
             "'s' to add a new student,"
             "'m' to add a new mark to a student,"
             "'q' to end program."
