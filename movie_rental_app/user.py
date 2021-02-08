@@ -40,3 +40,16 @@ class User:
         user = cls(username)
         user.movies = movies
         return user
+
+    def json(self):
+        return {"name": self.name, "movies": [movie.json() for movie in self.movies]}
+
+    @classmethod
+    def read_from_json(cls, json_data):
+        user = User(json_data["name"])
+        movies = []
+        for movie in json_data["movies"]:
+            movies.append(Movie(movie["name"], movie["genre"], movie["watched"]))
+        user.movies = movies
+
+        return user
