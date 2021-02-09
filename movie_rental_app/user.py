@@ -19,6 +19,11 @@ class User:
     def watched_movies(self):
         self.movies = list(filter(lambda movie: movie.watched, self.movies))
 
+    def set_watched(self, title: str):
+        for movie in self.movies:
+            if movie.title == title:
+                movie.watched = True
+
     def save_to_CSV(self):
         with open(f"{self.name}.txt", "w") as f:
             f.write(self.name + "\n")
