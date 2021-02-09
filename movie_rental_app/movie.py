@@ -6,3 +6,10 @@ class Movie:
 
     def __repr__(self):
         return f"{self.title}"
+
+    def json(self):
+        return {
+            "title": self.title,
+            "genre": self.genre,
+            "watched": self.watched
+        }
