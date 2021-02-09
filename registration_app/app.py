@@ -1,83 +1,97 @@
-students_list = []
+# import typing
+
+student_list = []
 
 
-def create_student():
-    while True:
-        name = input("Please enter a student's name: ").capitalize().strip()
-        if len(name) < 1:
-            print("This value cannot be empty. Please enter a student name.")
-        elif not name.isalpha():
-            print("This value cannot be a number. Only letters.")
-        elif name.isalpha():
+def create_student() -> dict:
+    student_data = {}
+    while not student_data:
+        name = input("Enter student's name: ").strip().capitalize()
+        if name.isalpha() and len(name) > 2:
             student_data = {"name": name, "marks": []}
-
             return student_data
+        else:
+            print("Not a valid entry. Try again.")
 
 
-# def add_student():
-#     student_data = {}
-#     while not student_data:
-#         name = input("Enter a student name: ").strip().capitalize()
-#         if len(name) > 0 and name.isalpha():
-#             student_data = {"name": name, "marks": []}
-#         else:
-#             print("Try again:")
-#     return student_data
-
-
-def add_mark(student, mark):
+def add_mark(student: dict, mark: int):
     student["marks"].append(mark)
 
 
-def calculate_student_avg(student):
+def student_avg(student: dict) -> float:
     try:
-        result = sum(student["marks"]) / len(student["marks"])
-        return result
+        return sum(student["marks"]) / len(student["marks"])
     except ZeroDivisionError:
-        return
+        print("No marks.")
 
 
-def print_student_details(student):
-    print(f'{student["name"]}, average: {calculate_student_avg(student)}')
+def print_student_data(student: dict):
+    print(
+        f"name: {student['name']}, marks: {student['marks']}, avg: {student_avg(student)}"
+    )
 
 
-def print_all_students(students):
+def list_all_students(students: list):
     for idx, student in enumerate(students):
-        print(f"ID: {idx}, {print_student_details(student)}")
+        print(f"id: {idx}, {print_student_data(student)}")
+
+
+def get_student_id() -> int:
+    while True:
+        try:
+            idx = int(input("Enter student id from the list above: "))
+            return idx
+        except ValueError:
+            print("Only digits.")
+
+
+def get_mark() -> int:
+    while True:
+        try:
+            mark = int(input("Enter a new mark: "))
+            return mark
+        except ValueError:
+            print("Mark invalid. Try again.")
 
 
 def menu():
-    choice = input(
-        "Enter 'p' to print all students,"
-        "'s' to add a new student,"
-        "'m' to add a new mark to a student,"
-        "'q' to end program."
-        "Select your choice: "
+    # Add a student
+    # Add a mark to a student
+    # Print a list of students
+    # Exit the application
+
+    user_choice = input(
+        "'s' to add a student,"
+        "'m' to add a new mark"
+        "'l' to list all students' data"
+        "'q' to exit app: "
     )
 
-    while choice != "q":
-        if choice == "p":
-            print_all_students(students_list)
-        elif choice == "s":
-            students_list.append(create_student())
-        elif choice == "m":
-            if students_list:
-                print_all_students(students_list)
+    while user_choice != "q":
+        if user_choice == "s":
+            student_list.append(create_student())
+        elif user_choice == "m":
+            if student_list:
+                list_all_students(student_list)
                 try:
-                    student_id = int(input("Select the student ID to add a mark to: "))
-                    student = students_list[student_id]
-                    new_mark = int(input("Enter the new mark to be added: "))
+                    student_id = get_student_id()
+                    student = student_list[student_id]
+                    new_mark = get_mark()
                     add_mark(student, new_mark)
                 except (IndexError, ValueError):
                     pass
+            else:
+                print("First add student.")
+        elif user_choice == "l":
+            list_all_students(student_list)
 
-        choice = input(
-            "Enter 'p' to print all students,"
-            "'s' to add a new student,"
-            "'m' to add a new mark to a student,"
-            "'q' to end program."
-            "Select your choice: "
+        user_choice = input(
+            "'s' to add a student,"
+            "'m' to add a new mark"
+            "'l' to list all students' data"
+            "'q' to exit app: "
         )
 
 
-menu()
+if __name__ == "__main__":
+    menu()
