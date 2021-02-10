@@ -9,7 +9,7 @@ class User:
     def __repr__(self):
         return f"{self.name}"
 
-    def add_movie(self, genre=None, title=None):
+    def add_movie(self, title=None, genre=None):
         movie = Movie(title, genre, False)
         self.movies.append(movie)
 
@@ -18,14 +18,22 @@ class User:
 
     def watched_movies(self):
         self.movies = list(filter(lambda movie: movie.watched, self.movies))
+        return self.movies
+
+    def print_all_movies(self):
+        print(f"{self.movies} ")
 
     def set_watched(self, title: str):
         for movie in self.movies:
             if movie.title == title:
                 movie.watched = True
 
+    def unwatched_movies(self):
+        self.movies = list(filter(lambda movie: movie.watched is False, self.movies))
+        return self.movies
+
     def save_to_CSV(self):
-        with open(f"{self.name}.txt", "w") as f:
+        with open(f"{self.name}.csv", "w") as f:
             f.write(self.name + "\n")
             for movie in self.movies:
                 f.write(f"{movie.title}, {movie.genre}, {str(movie.watched)}")
@@ -47,7 +55,12 @@ class User:
         return user
 
     def json(self):
-        return {"name": self.name, "movies": [movie.json() for movie in self.movies]}
+        json_data = {
+            "name": self.name,
+            "movies": [movie.json() for movie in self.movies],
+        }
+        # with open()
+        return json_data
 
     @classmethod
     def read_from_json(cls, json_data):
@@ -58,3 +71,10 @@ class User:
         user.movies = movies
 
         return user
+
+
+# u1 = User("Marcel")
+# u1.add_movie("Six feet under", "drama")
+# u1.print_all_movies()
+# u1.save_to_CSV()
+# print(u1.json())
