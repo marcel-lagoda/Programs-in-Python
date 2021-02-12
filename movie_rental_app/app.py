@@ -1,10 +1,11 @@
-from user import User
 import json
 import os
+from user import User
 
 
 def menu():
-    name = input("Enter your name: ")
+    name = input("Enter your name: ").strip().capitalize()
+    print(f"Welcome {name}!")
     filenames = [f"{name}.csv,", f"{name}.json"]
     if file_exists(filenames):
         with open(file_exists(filenames), "r") as f:
@@ -21,12 +22,13 @@ def menu():
         "'y' to list all watched movies, \n"
         "'d' to delete movie by its title, \n"
         "'w' to set movie as watched, \n"
+        "'f' to create a new data file, \n"
         "'q' to exit: "
     )
 
     while selection != "q":
         if selection == "a":
-            new_movie = input("Enter movie title: ")
+            new_movie = input("Enter movie title: ").title()
             new_movie_genre = input("Enter movie genre: ")
             user.add_movie(new_movie, new_movie_genre)
         elif selection == "l":
@@ -44,6 +46,9 @@ def menu():
         elif selection == "w":
             watched = input("Enter a movie title you've watched: ")
             user.set_watched(watched)
+        elif selection == "f":
+            user.save_to_json()
+            user.save_to_CSV()
 
         selection = input(
             "Select your choice: \n"
@@ -53,6 +58,7 @@ def menu():
             "'y' to list all watched movies, \n"
             "'d' to delete movie by its title, \n"
             "'w' to set movie as watched, \n"
+            "'f' to create a new data file, \n"
             "'q' to exit: "
         )
 
