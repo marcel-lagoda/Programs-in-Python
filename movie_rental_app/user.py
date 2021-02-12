@@ -1,3 +1,4 @@
+import json
 from movie import Movie
 
 
@@ -21,7 +22,8 @@ class User:
         return self.movies
 
     def print_all_movies(self):
-        print(f"{self.movies} ")
+        for movie in self.movies:
+            print(f"{movie.title}, {movie.genre}")
 
     def set_watched(self, title: str):
         for movie in self.movies:
@@ -36,7 +38,7 @@ class User:
         with open(f"{self.name}.csv", "w") as f:
             f.write(self.name + "\n")
             for movie in self.movies:
-                f.write(f"{movie.title}, {movie.genre}, {str(movie.watched)}")
+                f.write(f"{movie.title}, {movie.genre}, {str(movie.watched)}\n")
 
     @classmethod
     def read_from_CSV(cls, filename):
@@ -54,13 +56,14 @@ class User:
         user.movies = movies
         return user
 
-    def json(self):
+    def save_to_json(self):
         json_data = {
             "name": self.name,
             "movies": [movie.json() for movie in self.movies],
         }
-        # with open()
-        return json_data
+        print(json_data)
+        with open(f"{self.name}.json", "w") as f:
+            json.dump(json_data, f, indent=4, sort_keys=True)
 
     @classmethod
     def read_from_json(cls, json_data):
@@ -71,10 +74,3 @@ class User:
         user.movies = movies
 
         return user
-
-
-# u1 = User("Marcel")
-# u1.add_movie("Six feet under", "drama")
-# u1.print_all_movies()
-# u1.save_to_CSV()
-# print(u1.json())
