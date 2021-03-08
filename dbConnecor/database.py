@@ -2,13 +2,23 @@ from psycopg2 import pool
 
 
 class Database:
-    cnx_pool = None
+    __cnx_pool = None
 
     @staticmethod
-    def initialise_pool():
-        Database.cnx_pool = pool.SimpleConnectionPool(
-            1, 1, user="user", database="database", password="password", host="host"
-        )
+    def initialise(**kwargs):
+        Database.__cnx_pool = pool.SimpleConnectionPool(1, 1, **kwargs)
+
+    @classmethod
+    def get_connection(cls):
+        return Database.__cnx_pool.getconn()
+
+    @classmethod
+    def return_connection(cls, connection):
+        Database.__cnx_pool.putconn(connection)
+
+    @classmethod
+    def close_all_connections(cls):
+        Database.__cnx_pool.closeall()
 
 
 class Cursor:
@@ -17,7 +27,7 @@ class Cursor:
         self.cursor = None
 
     def __enter__(self):
-        self.connection = cnx_pool.getconn()
+        self.connection = Database.get_connection()
         self.cursor = self.connection.cursor()
         return self.cursor
 
@@ -27,4 +37,4 @@ class Cursor:
         else:
             self.cursor.close()
             self.connection.commit()
-        cnx_pool.putconn(self.connection)
+        Database.return_connection(self.connection)

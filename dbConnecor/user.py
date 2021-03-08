@@ -9,7 +9,7 @@ class User:
         self.idx = idx
 
     def __repr__(self):
-        return f"{self.email}"
+        return f"Personal data for [{self.email}]: {self.f_name} {self.l_name}, id: {self.idx}"
 
     def insert_into_db(self):
         with Cursor() as cursor:
@@ -24,8 +24,8 @@ class User:
             cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
             selected_data = cursor.fetchone()
             return cls(
-                selected_data[0],
-                selected_data[1],
-                selected_data[2],
-                selected_data[3],
+                idx=selected_data[0],
+                email=selected_data[1],
+                f_name=selected_data[2],
+                l_name=selected_data[3],
             )
