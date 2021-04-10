@@ -1,4 +1,4 @@
-import lotek_app.program as programs
+import lotek_app.program as program
 
 
 def main():
@@ -10,7 +10,10 @@ def main():
 
     # Print out the winnings
     matched_numbers = user_numbers.intersection(lottery_numbers)
-    print(f"You matched {matched_numbers}. You won ${100 ** len(matched_numbers)}!")
+    if len(matched_numbers) == 1:
+        print(f"You matched {len(matched_numbers)} number. You won ${10 ** len(matched_numbers)}!")
+    else:
+        print(f"You matched {len(matched_numbers)} numbers. You won ${10 ** len(matched_numbers)}!")
 
 
 if __name__ == "__main__":

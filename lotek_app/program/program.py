@@ -7,11 +7,16 @@ def get_user_numbers():
     :return: user_numbers
     """
     user_numbers = set()
-    while len(user_numbers) <= 5:
+    while len(user_numbers) < 6:
         try:
-            user_input = int(input("Enter your six lucky numbers [between 1 and 29]: "))
-            user_numbers.add(user_input)
-            print(f"Your all lucky numbers so far : {user_numbers}")
+            user_input = int(
+                input("Enter your six lucky numbers one by one [between 1 and 29]: ")
+            )
+            if user_input in range(1, 29 + 1):
+                user_numbers.add(user_input)
+                print(f"Your all lucky numbers so far: {user_numbers}")
+            else:
+                continue
         except ValueError:
             print("Please try again: ")
 
