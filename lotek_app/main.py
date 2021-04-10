@@ -1,12 +1,12 @@
-import lotek_app.programs as programs
+import lotek_app.program as programs
 
 
 def main():
     # Load User numbers.
-    user_numbers = programs.get_user_numbers()
+    user_numbers = program.get_user_numbers()
 
     # Generate lottery numbers.
-    lottery_numbers = programs.generate_lucky_numbers()
+    lottery_numbers = program.generate_lucky_numbers()
 
     # Print out the winnings
     matched_numbers = user_numbers.intersection(lottery_numbers)
