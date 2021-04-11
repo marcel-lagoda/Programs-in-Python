@@ -1,3 +1,15 @@
+"""
+This is the "program" module.
+
+Program module supplies 2 functions, get_user_numbers(), generate_lucky_numbers().
+
+
+>>> import random
+>>> random.seed(1)
+>>> generate_lucky_numbers()
+{3, 5, 19, 25, 26, 28}
+"""
+
 import random
 
 
