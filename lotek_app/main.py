@@ -10,10 +10,10 @@ def main():
 
     # Print out the winnings
     matched_numbers = user_numbers.intersection(lottery_numbers)
-    if len(matched_numbers) == 1:
-        print(f"You matched {len(matched_numbers)} number. You won ${10 ** len(matched_numbers)}!")
-    else:
-        print(f"You matched {len(matched_numbers)} numbers. You won ${10 ** len(matched_numbers)}!")
+    print(
+        f"You matched {len(matched_numbers)} number{'s' if len(matched_numbers) != 1 else ''}."
+        f"You won ${10 ** len(matched_numbers)}!"
+    )
 
 
 if __name__ == "__main__":
